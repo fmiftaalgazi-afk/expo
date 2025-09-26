@@ -20,7 +20,7 @@ const TARGET_DEVICE = 'iPhone 17 Pro';
 const TARGET_DEVICE_IOS_VERSION = 26;
 const APP_ID = 'dev.expo.Payments';
 const OUTPUT_APP_PATH = 'ios/build/BareExpo.app';
-const MAESTRO_DRIVER_STARTUP_TIMEOUT = '120000'; // Wait 2 minutes for Maestro driver to start
+const MAESTRO_DRIVER_STARTUP_TIMEOUT = String(180_000); // Wait 3 minutes for Maestro driver to start
 const NUM_OF_RETRIES = 6;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -146,12 +146,12 @@ export function setupLogger(predicate: string, signal: AbortSignal): () => Promi
 
 async function startSimulatorAsync(deviceId: string, timeout: number = 1000 * 60 * 3) {
   await retryAsync(async (retryNumber) => {
-    if (process.env.CI) {
-      try {
-        await spawnAsync('xcrun', ['simctl', 'shutdown', deviceId], { stdio: 'inherit' });
-        await spawnAsync('xcrun', ['simctl', 'erase', deviceId], { stdio: 'inherit' });
-      } catch {}
-    }
+    // if (process.env.CI) {
+    //   try {
+    //     await spawnAsync('xcrun', ['simctl', 'shutdown', deviceId], { stdio: 'inherit' });
+    //     await spawnAsync('xcrun', ['simctl', 'erase', deviceId], { stdio: 'inherit' });
+    //   } catch {}
+    // }
 
     console.time(
       `\n📱 Starting Device - name[${TARGET_DEVICE}] udid[${deviceId}] retry[${retryNumber}]`
@@ -247,7 +247,6 @@ async function testAsync(
     throw e;
   } finally {
     stopLogCollectionController.abort();
-    await spawnAsync('xcrun', ['simctl', 'shutdown', deviceId], { stdio: 'inherit' });
   }
 }
 
