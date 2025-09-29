@@ -8,6 +8,8 @@
 
 ### 🐛 Bug fixes
 
+- Fix `FOREGROUND_SERVICE_MEDIA_PLAYBACK` being always present in the manifest.
+
 ### 💡 Others
 
 - [Android] Remove @UnstableReactNativeAPI annotations. ([#39921](https://github.com/expo/expo/pull/39921) by [@jakex7](https://github.com/jakex7))
